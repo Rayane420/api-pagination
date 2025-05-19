@@ -1,12 +1,12 @@
 package com.api.pagination.resource;
 
-import com.api.pagination.entity.Pessoa;
+import com.api.pagination.model.Pessoa;
 import com.api.pagination.service.PessoaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -16,7 +16,7 @@ public class PessoaResource {
     private final PessoaService pessoaService;
 
     @GetMapping("/lista-todos")
-    public ResponseEntity<List<Pessoa>> buscarPessoas(@RequestParam int pagina,
+    public ResponseEntity<Page<Pessoa>> buscarPessoas(@RequestParam int pagina,
                                                       @RequestParam int itens){
         return ResponseEntity.ok(pessoaService.findAll(pagina, itens));
     }
