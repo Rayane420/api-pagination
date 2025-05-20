@@ -19,7 +19,7 @@ public class PessoaService {
 
     public Page<PessoaDto> findAll(int pagina, int itens){
 
-        Page<Pessoa> pessoas = pessoaRepository.findAll(PageRequest.of(pagina, itens));
+        var pessoas = pessoaRepository.findAll(PageRequest.of(pagina, itens));
         return pessoas.map(pessoa -> modelMapper.map(pessoa, PessoaDto.class));
     }
 }

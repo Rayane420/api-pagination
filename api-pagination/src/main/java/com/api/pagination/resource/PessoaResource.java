@@ -1,5 +1,7 @@
 package com.api.pagination.resource;
 
+import com.api.pagination.dto.ApiResponse;
+import com.api.pagination.dto.PaginationResponseDTO;
 import com.api.pagination.dto.PessoaDto;
 import com.api.pagination.service.PessoaService;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +18,12 @@ public class PessoaResource {
     private final PessoaService pessoaService;
 
     @GetMapping("/lista-todos")
-    public ResponseEntity<Page<PessoaDto>> buscarPessoas(@RequestParam int pagina,
-                                                         @RequestParam int itens){
-        return ResponseEntity.ok(pessoaService.findAll(pagina, itens));
+    public ResponseEntity<ApiResponse<PessoaDto>> buscarPessoas(@RequestParam int pagina,
+                                                                @RequestParam int itens){
+        var body = pessoaService.findAll(pagina, itens);
+        return ResponseEntity.ok(new ApiResponse<>(
+                body.getContent(),
+                PaginationResponseDTO.fromPage(body)
+        ));
     }
 }
